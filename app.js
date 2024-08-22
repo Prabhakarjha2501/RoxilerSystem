@@ -6,9 +6,16 @@ const Staticsrouter = require('./route/StatisticsRoute.js');
 const BarChartdata = require('./route/BarChartRoute.js');
 const PieChartrouter = require('./route/PieChartRoute.js');
 const Combinerouter = require('./route/CombineRoute.js');
-
+const cors = require('cors');
 const app = express();
 app.use(express.json());
+
+
+const corsOptions = {
+    origin: '*',
+};
+app.use(cors(corsOptions));
+
 
 // API routes here
 app.use('/api',TransactionRouter);
