@@ -11,7 +11,7 @@ const getCombinedData = async (month, page = 1, perPage = 10, search = '') => {
     
     const statisticsResponse = await axios.get(`${BASE_URL}/statistics`, { params: { month } });
 
-    const transactionsResponse = await axios.get(`${BASE_URL}/transactions`, { params: { page, perPage, search } });
+    const transactionsResponse = await axios.get(`${BASE_URL}/transactions`, { params: { page, perPage, search,month } });
 
     return {
       barChart: barChartResponse.data,

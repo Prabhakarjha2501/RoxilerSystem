@@ -3,11 +3,7 @@ const moment = require('moment');
 const { Transaction } = require('../models');
 
 const getStatisticsForMonth = async (month) => {
-    const monthNumber = moment().month(month).format('M'); // Get month number (1-12)
-
-    const startDate = moment().month(monthNumber - 1).startOf('month').toDate();
-    const endDate = moment().month(monthNumber - 1).endOf('month').toDate();
-
+    const monthNumber = moment().month(month).format('M');
     const transactions = await Transaction.findAll({
         where: {
             [Op.or]: [

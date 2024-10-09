@@ -1,12 +1,14 @@
-const { Op } = require('sequelize');
+const { Op,literal} = require('sequelize');
 const db = require('../models');
+const moment = require('moment');
 
-const getTransactions = async ({ page, perPage, search }) => {
+const getTransactions = async ({ page, perPage, search,month }) => {
   const offset = (page - 1) * perPage;
   const limit = parseInt(perPage, 10);
 
   const cleanedSearch = search.trim().replace(/^['"]+|['"]+$/g, '');
-  const whereCondition = {
+  const monthNumber = moment().month(month).format('M');
+  const searchCondition= {
     [Op.or]: [
       { title: { [Op.iLike]: `%${cleanedSearch}%` } },
       { description: { [Op.iLike]: `%${cleanedSearch}%` } },
@@ -14,8 +16,17 @@ const getTransactions = async ({ page, perPage, search }) => {
     ].filter(Boolean)
   };
 
+const monthCondition = literal(`EXTRACT(MONTH FROM "dateOfSale") = ${monthNumber}`);
+
+  const whereCondition ={
+    [Op.and]: [
+      search ? searchCondition : {},
+      month ? monthCondition : {}
+    ]
+  };
+
   const options = {
-    where: search ? whereCondition : {},
+   where:whereCondition,
     offset,
     limit,
     order: [['dateOfSale', 'DESC']],

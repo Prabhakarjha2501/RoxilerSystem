@@ -7,7 +7,7 @@ const getCategoryStatistics = async (month, categories) => {
     const startDate = moment().year(2021).month(month).startOf('month').toDate();
     const endDate = moment().year(2021).month(month).endOf('month').toDate();
 
-    
+
     const categoriesCount = await db.Transaction.findAll({
         attributes: [
             'category',
@@ -18,7 +18,7 @@ const getCategoryStatistics = async (month, categories) => {
                 [Op.between]: [startDate, endDate]
             },
             category: {
-                [Op.in]: categories 
+                [Op.in]: categories
             }
         },
         group: 'category',

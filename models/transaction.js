@@ -38,7 +38,7 @@ const Transactionces=(sequelize) =>{
     allowNull: false,
   }
 }, {
-  timestamps: false // Disable automatic timestamps
+  timestamps: false 
 });
 return Transaction;
 }
